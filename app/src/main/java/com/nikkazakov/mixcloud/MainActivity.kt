@@ -32,6 +32,11 @@ class MainActivity : AppCompatActivity() {
                 resultText.text = "6"
         }
 
+        val ResetButton: Button = findViewById(R.id.reset_button)
+        ResetButton.setOnClickListener{
+            rollDice()
+            resultText.text = "0"
+        }
 
     }
 
