@@ -4,45 +4,52 @@ import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId", "SetTextI18n")
+    lateinit var diceImage : ImageView
+    lateinit var diceImage2 : ImageView
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         val rollButton: Button = findViewById(R.id.roll_button)
-        val resultText: TextView = findViewById(R.id.result_text)
+        diceImage = findViewById(R.id.dice_image)
+        diceImage2 = findViewById(R.id.dice_image2)
         rollButton.setOnClickListener {
             rollDice()
-            var randomInt = (1..6).random()
-            resultText.text = randomInt.toString()
         }
 
-        val CountUpButton: Button = findViewById(R.id.CountUp_button)
-        CountUpButton.setOnClickListener{
-            rollDice()
-            if((resultText.text == "1") or (resultText.text == "2") or (resultText.text == "3") or (resultText.text == "4") or (resultText.text == "5"))
-                resultText.text = (resultText.text.toString().toInt()+1).toString()
-            if(resultText.text == "Hello World!")
-                resultText.text = "1"
-            if(resultText.text == "6")
-                resultText.text = "6"
-        }
-
-        val ResetButton: Button = findViewById(R.id.reset_button)
-        ResetButton.setOnClickListener{
-            rollDice()
-            resultText.text = "0"
+        val ClearButton: Button = findViewById(R.id.clear_button)
+        ClearButton.setOnClickListener{
+            cleardice()
         }
 
     }
 
+    private fun cleardice() {
+        diceImage.setImageResource(R.drawable.empty_dice)
+        diceImage2.setImageResource(R.drawable.empty_dice)
+    }
+
     private fun rollDice() {
-        Toast.makeText(this, "button clicked",
-        Toast.LENGTH_SHORT).show()
+        diceImage.setImageResource(getRandomDiceImage())
+        diceImage2.setImageResource(getRandomDiceImage())
+    }
+    private fun getRandomDiceImage(): Int {
+        val randomInt = (1..6).random()
+        return when (randomInt) {
+            1 -> R.drawable.dice_1
+            2 -> R.drawable.dice_2
+            3 -> R.drawable.dice_3
+            4 -> R.drawable.dice_4
+            5 -> R.drawable.dice_5
+            else -> R.drawable.dice_6
+        }
     }
 
 
